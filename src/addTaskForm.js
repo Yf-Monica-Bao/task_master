@@ -1,5 +1,4 @@
 import React, {useState} from "react"; 
-import {Axios, db} from '../firebase/firebaseConfig'; 
 
 const AddTaskForm = (props) => {
     const [formFields, setFormFields] = useState({
@@ -46,7 +45,7 @@ const AddTaskForm = (props) => {
         })
     }
 
-    const onFormSubmit(event) => {
+    const onFormSubmit = (event) => {
         event.preventDefault(); 
         props.addTaskCallBack({
             description: formFields.description,
