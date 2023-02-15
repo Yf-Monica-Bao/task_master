@@ -66,10 +66,11 @@ const AddTaskForm = (props) => {
                     onChange = {onStatusChange}
                     placeholder = "status" 
                 />
+                <label>Estimate Time to Complete</label>
                 <input
                     type = "string"
                     onChange = {onTimeToCompleteChange}
-                    placeholder = "time to complete" 
+                    placeholder = "Estimate Time to Complete" 
                 />
                 <button onClick={onFormSubmit}>Add Task</button>
             </form>

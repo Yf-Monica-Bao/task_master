@@ -81,11 +81,12 @@ function App() {
               <th>Description</th>
               <th>Due Date</th>
               <th>Time To Complete</th>
-              <th>Satus</th>
+              <th>Status</th>
             </tr>
           </thead>
           <TasksTable allTasks={tasks} />
         </Table>
+        <AddTaskForm addTaskCallBack = {addTask}></AddTaskForm>
       </main>
       {/* {users.map((user) => {
         return <section key={user.id}>{JSON.stringify(user)}</section>;
