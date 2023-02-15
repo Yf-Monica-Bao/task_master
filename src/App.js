@@ -1,8 +1,9 @@
 import "./App.css";
 import { React, useState, useEffect } from "react";
 import { db } from "./firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { async } from "@firebase/util";
+import AddTaskForm from "./addTaskForm";
 import TasksTable from "./components/tasksTable";
 import { Table } from "react-bootstrap";
 
@@ -39,11 +40,23 @@ function App() {
     });
   }, []);
 
+  const addTask = async(newTask) => {
+    await addDoc(user1TasksCollectionRef, {
+            description: newTask.description,
+            due_date: new Date(newTask.due_date), 
+            name: newTask.name,
+            status: newTask.status,
+            time_to_complete: newTask.time_to_complete 
+    })
+  }
+
   return (
     <div className="App">
       {/* {tasks.map((task) => {
         return (
           <section key={task.id}>
+            {<AddTaskForm addTaskCallBack={addTask}/>}
+            
             {JSON.stringify(task)}
             {/* <h2>id: {task.id}</h2>
             <p>description: {task.description}</p>
@@ -51,6 +64,8 @@ function App() {
             <p>estimated time to complete: {task.time_to_complete}</p> 
           </section>
         );
+      })}
+      
       })} */}
 
       {/* <section>
@@ -66,11 +81,12 @@ function App() {
               <th>Description</th>
               <th>Due Date</th>
               <th>Time To Complete</th>
-              <th>Satus</th>
+              <th>Status</th>
             </tr>
           </thead>
           <TasksTable allTasks={tasks} />
         </Table>
+        <AddTaskForm addTaskCallBack = {addTask}></AddTaskForm>
       </main>
       {/* {users.map((user) => {
         return <section key={user.id}>{JSON.stringify(user)}</section>;
