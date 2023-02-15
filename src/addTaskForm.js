@@ -9,7 +9,6 @@ const AddTaskForm = (props) => {
         "time_to_complete": ""
     })
 
-
     const onDescriptionChange = (event) => {
         setFormFields({
             ...formFields,
@@ -55,7 +54,11 @@ const AddTaskForm = (props) => {
             time_to_complete: formFields.time_to_complete 
         });
         //Reset form fields after one is being submitted
-        setFormFields({description:"", due_date: new Date(), name: "", status: "", time_to_complete: ""})
+        setFormFields({
+            description:"", 
+            due_date: new Date(), name: "", 
+            status: "", 
+            time_to_complete: ""})
     }
 
     return (
