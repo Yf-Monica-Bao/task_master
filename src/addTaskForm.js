@@ -63,36 +63,36 @@ const AddTaskForm = (props) => {
         <form onSubmit={onFormSubmit}>
             <button>New Task</button>
             <div>
-                <input>
+                <input
                     name = "description"
                     value = {formFields.description}
                     onChange = {onDescriptionChange}
                     placeholder = "description" 
-                </input>
-                <input>
+                />
+                <input
                     name = "due_date"
                     value = {formFields.due_date}
                     onChange = {onDueDateChange}
                     placeholder = "due_date" 
-                </input>
-                <input>
+                />
+                <input
                     name = "name"
                     value = {formFields.name}
                     onChange = {onNameChange}
                     placeholder = "name" 
-                </input>
-                <input>
+                />
+                <input
                     name = "status"
                     value = {formFields.status}
                     onChange = {onStatusChange}
                     placeholder = "status" 
-                </input>
-                <input>
+                />
+                <input
                     name = "time_to_complete"
                     value = {formFields.time_to_complete}
                     onChange = {onTimeToCompleteChange}
                     placeholder = "time to complete" 
-                </input>
+                />
             </div>
         </form>
 ); 

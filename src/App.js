@@ -35,7 +35,7 @@ function App() {
     getDocs(usersCollectionRef).then((users) => {
       setUsers(users.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
-  });
+  },[]);
 
   return (
     <div className="App">
