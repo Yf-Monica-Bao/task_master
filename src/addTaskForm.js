@@ -1,100 +1,80 @@
-import React, {useState} from "react"; 
-import {Axios, db} from '../firebase/firebaseConfig'; 
+import { useState } from "react";
+
 
 const AddTaskForm = (props) => {
-    const [formFields, setFormFields] = useState({
-        "description": "", 
-        "due_date": new Date(), 
-        "name": "", 
-        "status": "", 
-        "time_to_complete": ""
-    })
+    const [newDescription, setDescription] = useState("");
+    const [newDueDate, setDueDate] = useState(new Date()); 
+    const [newname, setName] = useState(""); 
+    const [newStatus, setStatus] = useState(""); 
+    const [newTimeToComplete, setTimeToComplete] = useState("")
 
 
     const onDescriptionChange = (event) => {
-        setFormFields({
-            ...formFields,
-            description: event.target.description,
-        })
+        setDescription(event.target.value)
     };
 
     const onDueDateChange = (event) => {
-        setFormFields({
-            ...formFields,
-            due_date: event.target.due_date,
-        })
+        setDueDate(event.target.value)
     }
 
     const onNameChange = (event) => {
-        setFormFields({
-            ...formFields,
-            name: event.target.name,
-        })
+        setName(event.target.value)
     }
 
     const onStatusChange = (event) => {
-        setFormFields({
-            ...formFields,
-            status: event.target.status,
-        })
+        setStatus(event.target.value)
     }
 
     const onTimeToCompleteChange = (event) => {
-        setFormFields({
-            ...formFields,
-            time_to_complete: event.target.time_to_complete,
-        })
+        setTimeToComplete(event.target.value)
     }
 
-    const onFormSubmit(event) => {
+    const onFormSubmit = (event) => {
         event.preventDefault(); 
         props.addTaskCallBack({
-            description: formFields.description,
-            due_date: formFields.due_date, 
-            name: formFields.name,
-            status: formFields.status,
-            time_to_complete: formFields.time_to_complete 
+            description: newDescription,
+            due_date: newDueDate, 
+            name: newname,
+            status: newStatus,
+            time_to_complete: newTimeToComplete
         });
-        //Reset form fields after one is being submitted
-        setFormFields({description:"", due_date: new Date(), name: "", status: "", time_to_complete: ""})
     }
 
     return (
-        <form onSubmit={onFormSubmit}>
-            <button>New Task</button>
-            <div>
+            <form>
+                <label>Task Name</label>
                 <input
-                    name = "description"
-                    value = {formFields.description}
-                    onChange = {onDescriptionChange}
-                    placeholder = "description" 
-                />
-                <input
-                    name = "due_date"
-                    value = {formFields.due_date}
-                    onChange = {onDueDateChange}
-                    placeholder = "due_date" 
-                />
-                <input
-                    name = "name"
-                    value = {formFields.name}
+                    type = "string"
                     onChange = {onNameChange}
                     placeholder = "name" 
                 />
+                <label>Due_date</label>
                 <input
-                    name = "status"
-                    value = {formFields.status}
+                    type = "date"
+                    onChange = {onDueDateChange}
+                    placeholder = "due_date" 
+                />
+                <label>Task description</label>
+                <input 
+                    type = "string"
+                    onChange = {onDescriptionChange}
+                    placeholder = "description" 
+                />
+                <label>Status</label>
+                <input
+                    name = "string"
                     onChange = {onStatusChange}
                     placeholder = "status" 
                 />
+                <label>Estimate Time to Complete</label>
                 <input
-                    name = "time_to_complete"
-                    value = {formFields.time_to_complete}
+                    type = "string"
                     onChange = {onTimeToCompleteChange}
-                    placeholder = "time to complete" 
+                    placeholder = "Estimate Time to Complete" 
                 />
-            </div>
-        </form>
+                <button onClick={onFormSubmit}>Add Task</button>
+            </form>
+
 ); 
 }; 
 
