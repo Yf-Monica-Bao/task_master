@@ -36,7 +36,7 @@ function App() {
     getDocs(usersCollectionRef).then((users) => {
       setUsers(users.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
-  });
+  }, []);
 
   const addTask = async(newTask) => {
     await addDoc(user1TasksCollectionRef, {
@@ -46,7 +46,6 @@ function App() {
             status: newTask.status,
             time_to_complete: newTask.time_to_complete 
     })
-    
   }
 
   return (
@@ -55,6 +54,7 @@ function App() {
         return (
           <section key={task.id}>
             {<AddTaskForm addTaskCallBack={addTask}/>}
+            
             {JSON.stringify(task)}
             {/* <h2>id: {task.id}</h2>
             <p>description: {task.description}</p>
