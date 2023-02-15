@@ -1,8 +1,10 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import { db } from "./firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 import { async } from "@firebase/util";
+import TasksTable from "./components/tasksTable";
+import { Table } from "react-bootstrap";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -35,21 +37,44 @@ function App() {
     getDocs(usersCollectionRef).then((users) => {
       setUsers(users.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
-  });
+  }, []);
 
   return (
     <div className="App">
-      {tasks.map((task) => {
+      {/* {tasks.map((task) => {
         return (
           <section key={task.id}>
             {JSON.stringify(task)}
             {/* <h2>id: {task.id}</h2>
             <p>description: {task.description}</p>
             <p>due date: {task.due_date}</p>
-            <p>estimated time to complete: {task.time_to_complete}</p> */}
+            <p>estimated time to complete: {task.time_to_complete}</p> 
           </section>
         );
-      })}
+      })} */}
+
+      {/* <section>
+        <tasksTable allTasks={tasks} />
+        <div>{JSON.stringify(tasks)}</div>
+      </section> */}
+      <h1>My tasks:</h1>
+      <main>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Due Date</th>
+              <th>Time To Complete</th>
+              <th>Satus</th>
+            </tr>
+          </thead>
+          <TasksTable allTasks={tasks} />
+        </Table>
+      </main>
+      {/* {users.map((user) => {
+        return <section key={user.id}>{JSON.stringify(user)}</section>;
+      })} */}
     </div>
   );
 }
