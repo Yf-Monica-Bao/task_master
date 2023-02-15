@@ -41,20 +41,20 @@ function App() {
   const addTask = async(newTask) => {
     await addDoc(user1TasksCollectionRef, {
             description: newTask.description,
-            due_date: newTask.due_date, 
+            due_date: new Date(newTask.due_date), 
             name: newTask.name,
             status: newTask.status,
             time_to_complete: newTask.time_to_complete 
     })
+    
   }
 
   return (
     <div className="App">
-      {<AddTaskForm addTaskCallBack = {addTask}/>}
-      
       {tasks.map((task) => {
         return (
           <section key={task.id}>
+            {<AddTaskForm addTaskCallBack={addTask}/>}
             {JSON.stringify(task)}
             {/* <h2>id: {task.id}</h2>
             <p>description: {task.description}</p>

@@ -1,102 +1,75 @@
-import React, {useState} from "react"; 
+import { useState } from "react";
+
 
 const AddTaskForm = (props) => {
-    const [formFields, setFormFields] = useState({
-        "description": "", 
-        "due_date": new Date(), 
-        "name": "", 
-        "status": "", 
-        "time_to_complete": ""
-    })
+    const [newDescription, setDescription] = useState("");
+    const [newDueDate, setDueDate] = useState(new Date()); 
+    const [newname, setName] = useState(""); 
+    const [newStatus, setStatus] = useState(""); 
+    const [newTimeToComplete, setTimeToComplete] = useState("")
+
 
     const onDescriptionChange = (event) => {
-        setFormFields({
-            ...formFields,
-            description: event.target.description,
-        })
+        setDescription(event.target.value)
     };
 
     const onDueDateChange = (event) => {
-        setFormFields({
-            ...formFields,
-            due_date: event.target.due_date,
-        })
+        setDueDate(event.target.value)
     }
 
     const onNameChange = (event) => {
-        setFormFields({
-            ...formFields,
-            name: event.target.name,
-        })
+        setName(event.target.value)
     }
 
     const onStatusChange = (event) => {
-        setFormFields({
-            ...formFields,
-            status: event.target.status,
-        })
+        setStatus(event.target.value)
     }
 
     const onTimeToCompleteChange = (event) => {
-        setFormFields({
-            ...formFields,
-            time_to_complete: event.target.time_to_complete,
-        })
+        setTimeToComplete(event.target.value)
     }
 
     const onFormSubmit = (event) => {
         event.preventDefault(); 
         props.addTaskCallBack({
-            description: formFields.description,
-            due_date: formFields.due_date, 
-            name: formFields.name,
-            status: formFields.status,
-            time_to_complete: formFields.time_to_complete 
+            description: newDescription,
+            due_date: newDueDate, 
+            name: newname,
+            status: newStatus,
+            time_to_complete: newTimeToComplete
         });
-        //Reset form fields after one is being submitted
-        setFormFields({
-            description:"", 
-            due_date: new Date(), name: "", 
-            status: "", 
-            time_to_complete: ""})
     }
 
     return (
-        <form onSubmit={onFormSubmit}>
-            <button>New Task</button>
             <div>
                 <input>
-                    name = "description"
-                    value = {formFields.description}
+                    type = "string"
                     onChange = {onDescriptionChange}
                     placeholder = "description" 
                 </input>
                 <input>
-                    name = "due_date"
-                    value = {formFields.due_date}
+                    type = "date"
                     onChange = {onDueDateChange}
                     placeholder = "due_date" 
                 </input>
                 <input>
-                    name = "name"
-                    value = {formFields.name}
+                    type = "string"
                     onChange = {onNameChange}
                     placeholder = "name" 
                 </input>
                 <input>
-                    name = "status"
-                    value = {formFields.status}
+                    name = "string"
                     onChange = {onStatusChange}
                     placeholder = "status" 
                 </input>
                 <input>
-                    name = "time_to_complete"
-                    value = {formFields.time_to_complete}
+                    type = "string"
                     onChange = {onTimeToCompleteChange}
                     placeholder = "time to complete" 
                 </input>
+                <button onClick={onFormSubmit}>Add Task</button>
             </div>
-        </form>
+
 ); 
 }; 
 
