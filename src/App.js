@@ -1,11 +1,12 @@
 import "./App.css";
 import { React, useState, useEffect } from "react";
 import { db } from "./firebase-config";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, updateDoc, doc } from "firebase/firestore";
 import { async } from "@firebase/util";
 import AddTaskForm from "./addTaskForm";
 import TasksTable from "./components/tasksTable";
 import { Table } from "react-bootstrap";
+import updateTask from "./updateTask";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -34,6 +35,19 @@ function App() {
 
   const addTask = async (newTask) => {
     await addDoc(user1TasksCollectionRef, {
+      description: newTask.description,
+      due_date: new Date(newTask.due_date),
+      name: newTask.name,
+      status: newTask.status,
+      time_to_complete: newTask.time_to_complete,
+    });
+    getAllTasksUser1();
+  };
+
+  const updateid = "9zCGaSnElsdiFzTa72zo";
+  const updateTask = async (updateid,newTask) => {
+    const taskDoc = doc(db, "tasks", updateid)
+    await updateDoc(taskDoc, {
       description: newTask.description,
       due_date: new Date(newTask.due_date),
       name: newTask.name,
@@ -80,6 +94,9 @@ function App() {
           <TasksTable allTasks={tasks} />
         </Table>
         <AddTaskForm addTaskCallBack={addTask}></AddTaskForm>
+        <div>
+        <updateTaskForm updateTaskCallBack={updateTask}></updateTaskForm>
+        </div>
       </main>
       {/* {users.map((user) => {
         return <section key={user.id}>{JSON.stringify(user)}</section>;
