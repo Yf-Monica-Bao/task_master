@@ -16,23 +16,15 @@ function App() {
   );
   const usersCollectionRef = collection(db, "users");
 
+  const getAllTasksUser1 = () => {
+    getDocs(user1TasksCollectionRef).then((tasks) => {
+      setTasks(tasks.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  };
+
   useEffect(() => {
-    const getTasks = async () => {
-      const data = await getDocs(user1TasksCollectionRef);
-      setTasks(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-
-    getTasks();
+    getAllTasksUser1();
   }, []);
-
-  // useEffect(() => {
-  //   const getUsers = async () => {
-  //     const data = await getDocs(usersCollectionRef);
-  //     setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  //   };
-
-  //   getUsers();
-  // }, []);
 
   useEffect(() => {
     getDocs(usersCollectionRef).then((users) => {
@@ -40,15 +32,16 @@ function App() {
     });
   }, []);
 
-  const addTask = async(newTask) => {
+  const addTask = async (newTask) => {
     await addDoc(user1TasksCollectionRef, {
-            description: newTask.description,
-            due_date: new Date(newTask.due_date), 
-            name: newTask.name,
-            status: newTask.status,
-            time_to_complete: newTask.time_to_complete 
-    })
-  }
+      description: newTask.description,
+      due_date: new Date(newTask.due_date),
+      name: newTask.name,
+      status: newTask.status,
+      time_to_complete: newTask.time_to_complete,
+    });
+    getAllTasksUser1();
+  };
 
   return (
     <div className="App">
@@ -86,7 +79,7 @@ function App() {
           </thead>
           <TasksTable allTasks={tasks} />
         </Table>
-        <AddTaskForm addTaskCallBack = {addTask}></AddTaskForm>
+        <AddTaskForm addTaskCallBack={addTask}></AddTaskForm>
       </main>
       {/* {users.map((user) => {
         return <section key={user.id}>{JSON.stringify(user)}</section>;
