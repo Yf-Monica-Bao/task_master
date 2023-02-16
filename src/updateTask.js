@@ -1,12 +1,12 @@
 import { useState } from "react";
 //import {db, updateDoc, doc} from '../firebase/firebaseConfig'; 
 
-const updateTaskForm = (props) => {
-    const [newDescription, setDescription] = "TestUpdateTask";
-    const [newDueDate, setDueDate] = "02/15/2022"; 
-    const [newname, setName] = "NameTestUpdateTask"; 
-    const [newStatus, setStatus] = "StatusTestUpdateTask"; 
-    const [newTimeToComplete, setTimeToComplete] = "TimeTest";
+const UpdateTaskForm = (props) => {
+    const [newDescription, setDescription] = useState("");
+    const [newDueDate, setDueDate] = useState(new Date()); 
+    const [newname, setName] = useState("eeee"); 
+    const [newStatus, setStatus] = useState(""); 
+    const [newTimeToComplete, setTimeToComplete] = useState("")
 
 
     const onDescriptionChange = (event) => {
@@ -83,7 +83,7 @@ const updateTaskForm = (props) => {
 ); 
 }; 
 
-export default updateTaskForm; 
+export default UpdateTaskForm; 
 
 
 

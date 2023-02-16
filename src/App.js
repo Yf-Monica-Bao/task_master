@@ -6,7 +6,7 @@ import { async } from "@firebase/util";
 import AddTaskForm from "./addTaskForm";
 import TasksTable from "./components/tasksTable";
 import { Table } from "react-bootstrap";
-import updateTask from "./updateTask";
+import UpdateTaskForm from "./updateTask";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -44,9 +44,9 @@ function App() {
     getAllTasksUser1();
   };
 
-  const updateid = "9zCGaSnElsdiFzTa72zo";
-  const updateTask = async (updateid,newTask) => {
-    const taskDoc = doc(db, "tasks", updateid)
+  //const id = "9zCGaSnElsdiFzTa72zo";
+  const updateTask = async (id,newTask) => {
+    const taskDoc = doc(db, "tasks", id)
     await updateDoc(taskDoc, {
       description: newTask.description,
       due_date: new Date(newTask.due_date),
@@ -95,7 +95,7 @@ function App() {
         </Table>
         <AddTaskForm addTaskCallBack={addTask}></AddTaskForm>
         <div>
-        <updateTaskForm updateTaskCallBack={updateTask}></updateTaskForm>
+        <UpdateTaskForm updateTaskCallBack={updateTask}></UpdateTaskForm>
         </div>
       </main>
       {/* {users.map((user) => {
