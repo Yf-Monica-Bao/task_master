@@ -10,7 +10,13 @@ const oneTask = ({
   dueDate,
   timeToComplete,
   status,
+  deleteTaskCallBack
 }) => {
+  
+  const deleteCallBack= () =>  {
+    deleteTaskCallBack(id);
+  }
+
   return (
     <tr>
       <td>{name}</td>
@@ -19,7 +25,7 @@ const oneTask = ({
       <td>{timeToComplete}</td>
       <td>{status}</td>
       <td><button>Update</button></td>
-      <td><button>Delete</button></td>
+      <td><button onClick={deleteCallBack}>Delete</button></td>
     </tr>
   );
 };
