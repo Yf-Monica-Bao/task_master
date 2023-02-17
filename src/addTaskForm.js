@@ -7,6 +7,12 @@ const AddTaskForm = (props) => {
   const [newname, setName] = useState("");
   const [newStatus, setStatus] = useState("not started yet");
   const [newTimeToComplete, setTimeToComplete] = useState("");
+  const [toggleForm, setToggleForm] = useState(false); 
+
+  const onToggleForm = (event) => {
+    event.preventDefault(); 
+    setToggleForm(!toggleForm)
+  }
 
   const onDescriptionChange = (event) => {
     setDescription(event.target.value);
@@ -45,8 +51,11 @@ const AddTaskForm = (props) => {
   };
 
   return (
-    <form>
-      <label>Task Name</label>
+    <form onSubmit={onFormSubmit}>
+      <button onClick={onToggleForm}>Add Task</button> 
+      {toggleForm && (
+        <div>
+        <label>Task Name</label>
       <input
         type="string"
         onChange={onNameChange}
@@ -68,14 +77,6 @@ const AddTaskForm = (props) => {
         value={newDescription}
       />
 
-      {/* <label>Status</label>
-      <input
-        name="string"
-        onChange={onStatusChange}
-        placeholder="status"
-        value={newStatus}
-      /> */}
-
       <label>Estimate Time to Complete</label>
       <input
         type="string"
@@ -95,7 +96,9 @@ const AddTaskForm = (props) => {
         <option value="blocked">blocked</option>
       </Form.Select>
 
-      <button onClick={onFormSubmit}>Add Task</button>
+      <button type="submit">Add</button> 
+      </div>
+      )}
     </form>
   );
 };

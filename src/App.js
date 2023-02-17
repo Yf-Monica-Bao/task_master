@@ -1,7 +1,13 @@
 import "./App.css";
 import { React, useState, useEffect } from "react";
 import { db } from "./firebase-config";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { async } from "@firebase/util";
 import AddTaskForm from "./addTaskForm";
 import TasksTable from "./components/tasksTable";
@@ -11,6 +17,14 @@ import Form from "react-bootstrap/Form";
 function App() {
   const [tasks, setTasks] = useState([]);
   const [users, setUsers] = useState([]);
+  // const [currentTask, setCurrentTask] = useState({
+  //     description: "",
+  //     due_date: "",
+  //     name: "",
+  //     status: "",
+  //     time_to_complete: "",
+  // });
+
   const [sortBy, setSortBy] = useState("due date");
 
   const onSortByChange = (event) => {
@@ -83,28 +97,15 @@ function App() {
     getAllTasksUser1();
   };
 
+  const deleteTask = async (toDeleteTask) => {
+    console.log(toDeleteTask.id);
+    const docref = doc(db, `users/6cVRBwcwJzOUOBIcVDOQ/tasks/${toDeleteTask}`);
+    await deleteDoc(docref);
+    getAllTasksUser1();
+  };
+
   return (
     <div className="App">
-      {/* {tasks.map((task) => {
-        return (
-          <section key={task.id}>
-            {<AddTaskForm addTaskCallBack={addTask}/>}
-            
-            {JSON.stringify(task)}
-            {/* <h2>id: {task.id}</h2>
-            <p>description: {task.description}</p>
-            <p>due date: {task.due_date}</p>
-            <p>estimated time to complete: {task.time_to_complete}</p> 
-          </section>
-        );
-      })}
-      
-      })} */}
-
-      {/* <section>
-        <tasksTable allTasks={tasks} />
-        <div>{JSON.stringify(tasks)}</div>
-      </section> */}
       <h1>My tasks:</h1>
       <main>
         {/* <button onClick={sortByDueDate}>sort by due date</button> */}
@@ -132,7 +133,7 @@ function App() {
               <th>Status</th>
             </tr>
           </thead>
-          <TasksTable allTasks={tasks} />
+          <TasksTable allTasks={tasks} deleteCallBack={deleteTask} />
         </Table>
         <AddTaskForm addTaskCallBack={addTask}></AddTaskForm>
       </main>
