@@ -54,7 +54,7 @@ function App() {
   const deleteTask = async(toDeleteTask) => {
     console.log(toDeleteTask.id)
     const docref = doc(db, `users/6cVRBwcwJzOUOBIcVDOQ/tasks/${toDeleteTask}`)
-    deleteDoc(docref)
+    await deleteDoc(docref)
     getAllTasksUser1();
   };
 
