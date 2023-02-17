@@ -27,7 +27,7 @@ const tasksTable = ({ allTasks, deleteCallBack }) => {
         //dueDate={dueDate.getUTCFullYear() + "-" + dueDate.getUTCMonth() + "-" + dueDate.getUTCDay()}
         timeToComplete={task.time_to_complete}
         status={task.status}
-        deleteTaskCallBack = {deleteCallBack}
+        deleteTaskCallBack={deleteCallBack}
       />
     );
   });
