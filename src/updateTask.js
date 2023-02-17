@@ -33,53 +33,57 @@ const UpdateTaskForm = (props) => {
     }
 
     const onFormSubmit = (event) => {
+        const updateName = document.getElementById('updateName').value;
+        const updateDes = document.getElementById('updateDes').value;
+        const updateDate = document.getElementById('updateDate').value;
+        const updateTime = document.getElementById('updateTime').value;
+        const updateStatus = document.getElementById('updateStatus').value;
+        console.log(document.getElementById('taskId').value);
+        const taskId = document.getElementById('taskId').value;
+        const task = {
+            description: updateDes,
+            due_date: updateDate, 
+            name: updateName,
+            status: updateStatus,
+            time_to_complete: updateTime
+        };
         event.preventDefault(); 
-        props.updateTaskCallBack({
-            description: newDescription,
-            due_date: newDueDate, 
-            name: newname,
-            status: newStatus,
-            time_to_complete: newTimeToComplete
-        });
+        props.updateTaskCallBack("122i1rsxIuIrXOqBUj8R", task);
     }
 
     return (
             <dialog id="updateForm">
             <form method="dialog">
+                <input id="taskId" type="hidden" value=""/>
                 <label>Task Name</label>
                 <input id ="updateName"
                     type = "string"
                     onChange = {onNameChange}
                     placeholder = "name" 
-                    value = {newname}
                 />
                 <label>Due_date</label>
                 <input id = "updateDate"
                     type = "date"
                     onChange = {onDueDateChange}
                     placeholder = "due_date" 
-                    value = "2012/03/23"
                 />
                 <label>Task description</label>
                 <input id = "updateDes"
                     type = "string"
                     onChange = {onDescriptionChange}
                     placeholder = "description" 
-                    value = {newDescription}
                 />
                 <label>Status</label>
                 <input id = "updateStatus"
                     name = "string"
                     onChange = {onStatusChange}
                     placeholder = "status" 
-                    value = {newStatus}
                 />
                 <label>Estimate Time to Complete</label>
                 <input id = "updateTime"
                     type = "string"
                     onChange = {onTimeToCompleteChange}
                     placeholder = "Estimate Time to Complete" 
-                    value = {newTimeToComplete}
                 />
                 <button value="cancel">Cancel</button>
                 <button onClick={onFormSubmit}>Update Task</button>
