@@ -15,6 +15,8 @@ const tasksTable = ({ allTasks, deleteCallBack }) => {
     //     <li>estimated time to complete: {task.time_to_complete}</li>
     //   </ol>
     // );
+    const dueDate = task.due_date.toDate();
+    
     return (
       <OneTask
         key={task.id}
@@ -22,6 +24,7 @@ const tasksTable = ({ allTasks, deleteCallBack }) => {
         name={task.name}
         description={task.description}
         dueDate={task.due_date.toDate().toDateString()}
+        //dueDate={dueDate.getUTCFullYear() + "-" + dueDate.getUTCMonth() + "-" + dueDate.getUTCDay()}
         timeToComplete={task.time_to_complete}
         status={task.status}
         deleteTaskCallBack={deleteCallBack}
