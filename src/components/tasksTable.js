@@ -15,15 +15,24 @@ const tasksTable = ({ allTasks, deleteCallBack }) => {
     //     <li>estimated time to complete: {task.time_to_complete}</li>
     //   </ol>
     // );
-    const dueDate = task.due_date.toDate();
+    //const dueDate = task.due_date.toDate();
     
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+
+    options.timeZone = "UTC";
+
     return (
       <OneTask
         key={task.id}
         id={task.id}
         name={task.name}
         description={task.description}
-        dueDate={task.due_date.toDate().toDateString()}
+        dueDate={task.due_date.toDate().toLocaleString('en-GB', options)}
         //dueDate={dueDate.getUTCFullYear() + "-" + dueDate.getUTCMonth() + "-" + dueDate.getUTCDay()}
         timeToComplete={task.time_to_complete}
         status={task.status}
