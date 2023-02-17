@@ -1,22 +1,21 @@
 import "./App.css";
 import { React, useState, useEffect } from "react";
 import { db } from "./firebase-config";
+import { query, orderBy } from "firebase/firestore";
 import {
   collection,
   getDocs,
   addDoc,
   deleteDoc,
   doc,
-  updateDoc
+  updateDoc,
 } from "firebase/firestore";
 import { async } from "@firebase/util";
 import AddTaskForm from "./addTaskForm";
 import UpdateTaskForm from "./updateTask";
 import TasksTable from "./components/tasksTable";
 import { Table } from "react-bootstrap";
-import UpdateTaskForm from "./updateTask";
 import Form from "react-bootstrap/Form";
-
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -75,9 +74,11 @@ function App() {
   const usersCollectionRef = collection(db, "users");
 
   const getAllTasksUser1 = () => {
-    getDocs(user1TasksCollectionRef).then((tasks) => {
-      setTasks(tasks.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    });
+    getDocs(query(user1TasksCollectionRef, orderBy("due_date"))).then(
+      (tasks) => {
+        setTasks(tasks.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      }
+    );
   };
 
   useEffect(() => {
@@ -111,13 +112,14 @@ function App() {
   //const id = "9zCGaSnElsdiFzTa72zo";
   const updateTask = async (taskId, newTask) => {
     console.log(taskId);
-    const taskDoc = doc(db, `users/6cVRBwcwJzOUOBIcVDOQ/tasks/${taskId}`)
+    const taskDoc = doc(db, `users/6cVRBwcwJzOUOBIcVDOQ/tasks/${taskId}`);
     const newFields = {
       description: newTask.description,
       due_date: new Date(newTask.due_date),
       name: newTask.name,
       status: newTask.status,
-      time_to_complete: newTask.time_to_complete,}
+      time_to_complete: newTask.time_to_complete,
+    };
     await updateDoc(taskDoc, newFields);
     getAllTasksUser1();
   };
@@ -155,7 +157,7 @@ function App() {
         </Table>
         <AddTaskForm addTaskCallBack={addTask}></AddTaskForm>
         <div>
-        <UpdateTaskForm updateTaskCallBack={updateTask}></UpdateTaskForm>
+          <UpdateTaskForm updateTaskCallBack={updateTask}></UpdateTaskForm>
         </div>
       </main>
       {/* {users.map((user) => {
