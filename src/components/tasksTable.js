@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Table from "react-bootstrap/Table";
 import OneTask from "./oneTask";
 
-const tasksTable = ({ allTasks }) => {
+const tasksTable = ({ allTasks, deleteCallBack }) => {
   const taskEntries = allTasks.map((task) => {
     console.log(task);
     // return (
@@ -24,6 +24,7 @@ const tasksTable = ({ allTasks }) => {
         dueDate={task.due_date.toDate().toDateString()}
         timeToComplete={task.time_to_complete}
         status={task.status}
+        deleteTaskCallBack = {deleteCallBack}
       />
     );
   });
