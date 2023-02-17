@@ -18,6 +18,8 @@ const oneTask = ({
       <td>{dueDate}</td>
       <td>{timeToComplete}</td>
       <td>{status}</td>
+      <td><button>Update</button></td>
+      <td><button>Delete</button></td>
     </tr>
   );
 };
