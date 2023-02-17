@@ -1,13 +1,16 @@
 import { useState } from "react";
+import Form from "react-bootstrap/Form";
 //import {db, updateDoc, doc} from '../firebase/firebaseConfig'; 
+
+//call get task by id api to get the task info for props.
+
 
 const UpdateTaskForm = (props) => {
     const [newDescription, setDescription] = useState("");
-    const [newDueDate, setDueDate] = useState(new Date()); 
-    const [newname, setName] = useState("eeee"); 
+    const [newDueDate, setDueDate] = useState(); 
+    const [newname, setName] = useState(""); 
     const [newStatus, setStatus] = useState(""); 
     const [newTimeToComplete, setTimeToComplete] = useState("")
-
 
     const onDescriptionChange = (event) => {
         setDescription(event.target.value)
@@ -41,44 +44,47 @@ const UpdateTaskForm = (props) => {
     }
 
     return (
-            <form>
+            <dialog id="updateForm">
+            <form method="dialog">
                 <label>Task Name</label>
-                <input
+                <input id ="updateName"
                     type = "string"
                     onChange = {onNameChange}
                     placeholder = "name" 
                     value = {newname}
                 />
                 <label>Due_date</label>
-                <input
+                <input id = "updateDate"
                     type = "date"
                     onChange = {onDueDateChange}
                     placeholder = "due_date" 
-                    value = {newDueDate}
+                    value = "2012/03/23"
                 />
                 <label>Task description</label>
-                <input 
+                <input id = "updateDes"
                     type = "string"
                     onChange = {onDescriptionChange}
                     placeholder = "description" 
                     value = {newDescription}
                 />
                 <label>Status</label>
-                <input
+                <input id = "updateStatus"
                     name = "string"
                     onChange = {onStatusChange}
                     placeholder = "status" 
                     value = {newStatus}
                 />
                 <label>Estimate Time to Complete</label>
-                <input
+                <input id = "updateTime"
                     type = "string"
                     onChange = {onTimeToCompleteChange}
                     placeholder = "Estimate Time to Complete" 
                     value = {newTimeToComplete}
                 />
+                <button value="cancel">Cancel</button>
                 <button onClick={onFormSubmit}>Update Task</button>
             </form>
+            </dialog>
 
 ); 
 }; 

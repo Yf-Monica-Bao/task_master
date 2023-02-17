@@ -1,7 +1,7 @@
 import "./App.css";
 import { React, useState, useEffect } from "react";
 import { db } from "./firebase-config";
-import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, doc } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, } from "firebase/firestore";
 import { async } from "@firebase/util";
 import AddTaskForm from "./addTaskForm";
 import TasksTable from "./components/tasksTable";
@@ -60,8 +60,8 @@ function App() {
   };
 
   //const id = "9zCGaSnElsdiFzTa72zo";
-  const updateTask = async (id,newTask) => {
-    const taskDoc = doc(db, "tasks", id)
+  const updateTask = async (taskId,newTask) => {
+    const taskDoc = doc(db, `users/6cVRBwcwJzOUOBIcVDOQ/tasks/${taskId}`)
     await updateDoc(taskDoc, {
       description: newTask.description,
       due_date: new Date(newTask.due_date),
