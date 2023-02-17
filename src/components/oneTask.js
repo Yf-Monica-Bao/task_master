@@ -19,10 +19,12 @@ const oneTask = ({
   const displayUpdateCallBack =() => {
     document.getElementById('updateName').value = name;
     document.getElementById('updateDes').value = description;
-    document.getElementById('updateDate').value = "2012-3-23";
+    document.getElementById('updateDate').value = dueDate;
     document.getElementById('updateTime').value = timeToComplete;
     document.getElementById('updateStatus').value = status;
+    document.getElementById('taskId').value = id;
     document.getElementById('updateForm').showModal();
+
   }
 
 

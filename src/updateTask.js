@@ -38,7 +38,6 @@ const UpdateTaskForm = (props) => {
         const updateDate = document.getElementById('updateDate').value;
         const updateTime = document.getElementById('updateTime').value;
         const updateStatus = document.getElementById('updateStatus').value;
-        console.log(document.getElementById('taskId').value);
         const taskId = document.getElementById('taskId').value;
         const task = {
             description: updateDes,
@@ -48,13 +47,15 @@ const UpdateTaskForm = (props) => {
             time_to_complete: updateTime
         };
         event.preventDefault(); 
-        props.updateTaskCallBack("122i1rsxIuIrXOqBUj8R", task);
+        props.updateTaskCallBack(taskId, task);
+        document.getElementById('updateForm').close();
+
     }
 
     return (
             <dialog id="updateForm">
             <form method="dialog">
-                <input id="taskId" type="hidden" value=""/>
+                <input id="taskId" type="hidden"/>
                 <label>Task Name</label>
                 <input id ="updateName"
                     type = "string"
