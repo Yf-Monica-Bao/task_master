@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Table from "react-bootstrap/Table";
 import OneTask from "./oneTask";
 
-const tasksTable = ({ allTasks }) => {
+const tasksTable = ({ allTasks, sort }) => {
   const taskEntries = allTasks.map((task) => {
     console.log(task);
     // return (
