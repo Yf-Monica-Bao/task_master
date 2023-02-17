@@ -119,7 +119,7 @@ function App() {
             due date
           </option>
           <option value="name">name</option>
-          <option value="time to complete">time to complete</option>
+          {/* <option value="time to complete">time to complete</option> */}
           <option value="status">status</option>
         </Form.Select>
 
