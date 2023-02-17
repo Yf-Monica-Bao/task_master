@@ -7,7 +7,7 @@ import Form from "react-bootstrap/Form";
 
 const UpdateTaskForm = (props) => {
     const [newDescription, setDescription] = useState("");
-    const [newDueDate, setDueDate] = useState(); 
+    const [newDueDate, setDueDate] = useState(new Date()); 
     const [newname, setName] = useState(""); 
     const [newStatus, setStatus] = useState(""); 
     const [newTimeToComplete, setTimeToComplete] = useState("")

@@ -1,7 +1,6 @@
 import "./App.css";
 import { React, useState, useEffect } from "react";
 import { db } from "./firebase-config";
-
 import {
   collection,
   getDocs,
@@ -10,9 +9,9 @@ import {
   doc,
   updateDoc
 } from "firebase/firestore";
-
 import { async } from "@firebase/util";
 import AddTaskForm from "./addTaskForm";
+import UpdateTaskForm from "./updateTask";
 import TasksTable from "./components/tasksTable";
 import { Table } from "react-bootstrap";
 import UpdateTaskForm from "./updateTask";
