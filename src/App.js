@@ -1,11 +1,18 @@
 import "./App.css";
 import { React, useState, useEffect } from "react";
 import { db } from "./firebase-config";
-import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { async } from "@firebase/util";
 import AddTaskForm from "./addTaskForm";
 import TasksTable from "./components/tasksTable";
 import { Table } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -16,7 +23,46 @@ function App() {
   //     name: "",
   //     status: "",
   //     time_to_complete: "",
-  // }); 
+  // });
+
+  const [sortBy, setSortBy] = useState("due date");
+
+  const onSortByChange = (event) => {
+    setSortBy(event.target.value);
+    if (event.target.value === "due date") {
+      sortByDueDate();
+    } else if (event.target.value === "name") {
+      sortByName();
+    } else if (event.target.value === "time to complete") {
+      sortByTimeToComplete();
+    } else {
+      sortByStatus();
+    }
+  };
+
+  const sortByDueDate = () => {
+    const allTasks = [...tasks];
+    allTasks.sort((a, b) => a.due_date - b.due_date);
+    setTasks(allTasks);
+  };
+
+  const sortByName = () => {
+    const allTasks = [...tasks];
+    allTasks.sort((a, b) => a.name.localeCompare(b.name));
+    setTasks(allTasks);
+  };
+
+  const sortByTimeToComplete = () => {
+    const allTasks = [...tasks];
+    allTasks.sort((a, b) => a.time_to_complete - b.time_to_complete);
+    setTasks(allTasks);
+  };
+
+  const sortByStatus = () => {
+    const allTasks = [...tasks];
+    allTasks.sort((a, b) => a.status.localeCompare(b.status));
+    setTasks(allTasks);
+  };
 
   const user1TasksCollectionRef = collection(
     db,
@@ -51,10 +97,10 @@ function App() {
     getAllTasksUser1();
   };
 
-  const deleteTask = async(toDeleteTask) => {
-    console.log(toDeleteTask.id)
-    const docref = doc(db, `users/6cVRBwcwJzOUOBIcVDOQ/tasks/${toDeleteTask}`)
-    await deleteDoc(docref)
+  const deleteTask = async (toDeleteTask) => {
+    console.log(toDeleteTask.id);
+    const docref = doc(db, `users/6cVRBwcwJzOUOBIcVDOQ/tasks/${toDeleteTask}`);
+    await deleteDoc(docref);
     getAllTasksUser1();
   };
 
@@ -62,6 +108,21 @@ function App() {
     <div className="App">
       <h1>My tasks:</h1>
       <main>
+        {/* <button onClick={sortByDueDate}>sort by due date</button> */}
+        <label>Sort By:</label>
+        <Form.Select
+          aria-label="Sort By"
+          onChange={onSortByChange}
+          value={sortBy}
+        >
+          <option value="due date" selected>
+            due date
+          </option>
+          <option value="name">name</option>
+          {/* <option value="time to complete">time to complete</option> */}
+          <option value="status">status</option>
+        </Form.Select>
+
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -72,7 +133,7 @@ function App() {
               <th>Status</th>
             </tr>
           </thead>
-          <TasksTable allTasks={tasks} deleteCallBack = {deleteTask} />
+          <TasksTable allTasks={tasks} deleteCallBack={deleteTask} />
         </Table>
         <AddTaskForm addTaskCallBack={addTask}></AddTaskForm>
       </main>

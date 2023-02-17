@@ -24,7 +24,7 @@ const tasksTable = ({ allTasks, deleteCallBack }) => {
         dueDate={task.due_date.toDate().toDateString()}
         timeToComplete={task.time_to_complete}
         status={task.status}
-        deleteTaskCallBack = {deleteCallBack}
+        deleteTaskCallBack={deleteCallBack}
       />
     );
   });
