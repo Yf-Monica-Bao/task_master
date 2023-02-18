@@ -10,23 +10,22 @@ const oneTask = ({
   dueDate,
   timeToComplete,
   status,
-  deleteTaskCallBack
+  deleteTaskCallBack,
 }) => {
-  
-  const deleteCallBack= () =>  {
+  const deleteCallBack = () => {
     deleteTaskCallBack(id);
-  }
-  const displayUpdateCallBack =() => {
-    document.getElementById('updateName').value = name;
-    document.getElementById('updateDes').value = description;
-    document.getElementById('updateDate').value = dueDate;
-    document.getElementById('updateTime').value = timeToComplete;
-    document.getElementById('updateStatus').value = status;
-    document.getElementById('taskId').value = id;
-    document.getElementById('updateForm').showModal();
-
-  }
-
+  };
+  const displayUpdateCallBack = () => {
+    document.getElementById("updateName").value = name;
+    document.getElementById("updateDes").value = description;
+    document.getElementById("updateDate").value = new Date(dueDate)
+      .toISOString()
+      .substring(0, 10);
+    document.getElementById("updateTime").value = timeToComplete;
+    document.getElementById("updateStatus").value = status;
+    document.getElementById("taskId").value = id;
+    document.getElementById("updateForm").showModal();
+  };
 
   return (
     <tr>
@@ -35,8 +34,12 @@ const oneTask = ({
       <td>{dueDate}</td>
       <td>{timeToComplete}</td>
       <td>{status}</td>
-      <td><button onClick={displayUpdateCallBack}>Update</button></td>
-      <td><button onClick={deleteCallBack}>Delete</button></td>
+      <td>
+        <button onClick={displayUpdateCallBack}>Update</button>
+      </td>
+      <td>
+        <button onClick={deleteCallBack}>Delete</button>
+      </td>
     </tr>
   );
 };
