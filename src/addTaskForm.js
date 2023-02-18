@@ -84,7 +84,7 @@ const AddTaskForm = (props) => {
         placeholder="Estimate Time to Complete"
         value={newTimeToComplete}
       />
-      <label>Progress Satus</label>
+      <label>Progress Status</label>
       <Form.Select
         aria-label="Progress Status"
         onChange={onStatusChange}
