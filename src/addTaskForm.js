@@ -7,12 +7,12 @@ const AddTaskForm = (props) => {
   const [newname, setName] = useState("");
   const [newStatus, setStatus] = useState("not started yet");
   const [newTimeToComplete, setTimeToComplete] = useState("");
-  const [toggleForm, setToggleForm] = useState(false); 
+  const [toggleForm, setToggleForm] = useState(false);
 
   const onToggleForm = (event) => {
-    event.preventDefault(); 
-    setToggleForm(!toggleForm)
-  }
+    event.preventDefault();
+    setToggleForm(!toggleForm);
+  };
 
   const onDescriptionChange = (event) => {
     setDescription(event.target.value);
@@ -52,52 +52,52 @@ const AddTaskForm = (props) => {
 
   return (
     <form onSubmit={onFormSubmit}>
-      <button onClick={onToggleForm}>Add Task</button> 
+      <button onClick={onToggleForm}>Add Task</button>
       {toggleForm && (
         <div>
-        <label>Task Name</label>
-      <input
-        type="string"
-        onChange={onNameChange}
-        placeholder="name"
-        value={newname}
-      />
-      <label>Due_date</label>
-      <input
-        type="date"
-        onChange={onDueDateChange}
-        placeholder="due_date"
-        value={newDueDate}
-      />
-      <label>Task description</label>
-      <input
-        type="string"
-        onChange={onDescriptionChange}
-        placeholder="description"
-        value={newDescription}
-      />
+          <label>Task Name</label>
+          <input
+            type="string"
+            onChange={onNameChange}
+            placeholder="name"
+            value={newname}
+          />
+          <label>Due_date</label>
+          <input
+            type="date"
+            onChange={onDueDateChange}
+            placeholder="due_date"
+            value={newDueDate}
+          />
+          <label>Task description</label>
+          <input
+            type="string"
+            onChange={onDescriptionChange}
+            placeholder="description"
+            value={newDescription}
+          />
 
-      <label>Estimate Time to Complete</label>
-      <input
-        type="string"
-        onChange={onTimeToCompleteChange}
-        placeholder="Estimate Time to Complete"
-        value={newTimeToComplete}
-      />
-      <label>Progress Satus</label>
-      <Form.Select
-        aria-label="Progress Status"
-        onChange={onStatusChange}
-        value={newStatus}
-      >
-        <option value="not started yet">not started yet</option>
-        <option value="completed">completed</option>
-        <option value="in progress">in progress</option>
-        <option value="blocked">blocked</option>
-      </Form.Select>
+          <label>Estimate Time to Complete</label>
+          <input
+            type="string"
+            onChange={onTimeToCompleteChange}
+            placeholder="Estimate Time to Complete"
+            value={newTimeToComplete}
+          />
+          <label>Progress Satus</label>
+          <Form.Select
+            aria-label="Progress Status"
+            onChange={onStatusChange}
+            value={newStatus}
+          >
+            <option value="not started yet">not started yet</option>
+            <option value="completed">completed</option>
+            <option value="in progress">in progress</option>
+            <option value="blocked">blocked</option>
+          </Form.Select>
 
-      <button type="submit">Add</button> 
-      </div>
+          <button type="submit">Add</button>
+        </div>
       )}
     </form>
   );
