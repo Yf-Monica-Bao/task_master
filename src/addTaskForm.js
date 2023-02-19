@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 const AddTaskForm = (props) => {
   const [newDescription, setDescription] = useState("");
@@ -52,7 +53,9 @@ const AddTaskForm = (props) => {
 
   return (
     <form onSubmit={onFormSubmit}>
-      <button onClick={onToggleForm}>Add Task</button>
+      <Button onClick={onToggleForm} variant="outline-primary">
+        Add Task
+      </Button>
       {toggleForm && (
         <div>
           <label>Task Name</label>
@@ -96,7 +99,7 @@ const AddTaskForm = (props) => {
             <option value="blocked">blocked</option>
           </Form.Select>
 
-          <button type="submit">Add</button>
+          <Button type="submit">Add</Button>
         </div>
       )}
     </form>

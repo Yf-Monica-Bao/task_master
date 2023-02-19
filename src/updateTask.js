@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 //import {db, updateDoc, doc} from '../firebase/firebaseConfig';
 
 //call get task by id api to get the task info for props.
@@ -47,6 +48,10 @@ const UpdateTaskForm = (props) => {
     };
     event.preventDefault();
     props.updateTaskCallBack(taskId, task);
+    document.getElementById("updateForm").close();
+  };
+
+  const onCloseForm = () => {
     document.getElementById("updateForm").close();
   };
 
@@ -104,8 +109,16 @@ const UpdateTaskForm = (props) => {
             placeholder="Estimate Time to Complete"
           />
         </p>
-        <button value="cancel">Cancel</button>
-        <button onClick={onFormSubmit}>Update Task</button>
+        <Button
+          value="cancel"
+          variant="outline-secondary"
+          onClick={onCloseForm}
+        >
+          Cancel
+        </Button>
+        <Button onClick={onFormSubmit} variant="outline-danger">
+          Update Task
+        </Button>
       </form>
     </dialog>
   );
