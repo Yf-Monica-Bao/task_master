@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Button from "react-bootstrap/Button";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import Table from "react-bootstrap/Table";
 
@@ -35,10 +36,14 @@ const oneTask = ({
       <td>{timeToComplete}</td>
       <td>{status}</td>
       <td>
-        <button onClick={displayUpdateCallBack}>Update</button>
+        <Button variant="outline-dark" onClick={displayUpdateCallBack}>
+          Update
+        </Button>
       </td>
       <td>
-        <button onClick={deleteCallBack}>Delete</button>
+        <Button variant="outline-danger" onClick={deleteCallBack}>
+          Delete
+        </Button>
       </td>
     </tr>
   );
