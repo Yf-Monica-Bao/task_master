@@ -20,6 +20,7 @@ import Form from "react-bootstrap/Form";
 function App() {
   const [tasks, setTasks] = useState([]);
   const [users, setUsers] = useState([]);
+  const [overdueTasksNum, setOverdueTasksNum] = useState(0);
   // const [currentTask, setCurrentTask] = useState({
   //     description: "",
   //     due_date: "",
@@ -76,7 +77,7 @@ function App() {
   const getAllTasksUser1 = () => {
     getDocs(query(user1TasksCollectionRef, orderBy("due_date"))).then(
       (tasks) => {
-      setTasks(tasks.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        setTasks(tasks.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       }
     );
   };
@@ -90,6 +91,20 @@ function App() {
       setUsers(users.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   }, []);
+
+  const countOverdueTasks = () => {
+    var tempOverdueNum = 0;
+    for (const task of tasks) {
+      console.log(task.due_date.toDate().toISOString().slice(0, 10));
+      // const taskDueDate = task.due_date.toDate().toDateString();
+      const taskDueDate = task.due_date.toDate().toISOString().slice(0, 10);
+      const todayDate = new Date().toISOString().slice(0, 10);
+      if (taskDueDate < todayDate) {
+        tempOverdueNum++;
+      }
+    }
+    return tempOverdueNum;
+  };
 
   const addTask = async (newTask) => {
     await addDoc(user1TasksCollectionRef, {
@@ -126,6 +141,7 @@ function App() {
 
   return (
     <div className="App">
+      <h3>you have {countOverdueTasks()} overdue tasks</h3>
       <h1>My tasks:</h1>
       <main>
         {/* <button onClick={sortByDueDate}>sort by due date</button> */}
@@ -157,7 +173,7 @@ function App() {
         </Table>
         <AddTaskForm addTaskCallBack={addTask}></AddTaskForm>
         <div>
-        <UpdateTaskForm updateTaskCallBack={updateTask}></UpdateTaskForm>
+          <UpdateTaskForm updateTaskCallBack={updateTask}></UpdateTaskForm>
         </div>
       </main>
       {/* {users.map((user) => {
