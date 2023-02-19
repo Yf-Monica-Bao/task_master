@@ -92,6 +92,10 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    countOverdueTasks();
+  }, [tasks]);
+
   const countOverdueTasks = () => {
     var tempOverdueNum = 0;
     for (const task of tasks) {
@@ -103,7 +107,7 @@ function App() {
         tempOverdueNum++;
       }
     }
-    return tempOverdueNum;
+    setOverdueTasksNum(tempOverdueNum);
   };
 
   const addTask = async (newTask) => {
@@ -141,7 +145,7 @@ function App() {
 
   return (
     <div className="App">
-      <h3>you have {countOverdueTasks()} overdue tasks</h3>
+      <h3>you have {overdueTasksNum} overdue tasks</h3>
       <h1>My tasks:</h1>
       <main>
         {/* <button onClick={sortByDueDate}>sort by due date</button> */}
