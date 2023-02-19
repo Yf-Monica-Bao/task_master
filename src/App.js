@@ -21,6 +21,8 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [users, setUsers] = useState([]);
   const [overdueTasksNum, setOverdueTasksNum] = useState(0);
+  const [overdueStyle, setOverdueStyle] = useState("alert alert-success");
+
   // const [currentTask, setCurrentTask] = useState({
   //     description: "",
   //     due_date: "",
@@ -82,15 +84,23 @@ function App() {
     );
   };
 
-  useEffect(() => {
-    getAllTasksUser1();
-  }, []);
-
-  useEffect(() => {
+  const getAllUsers = () => {
     getDocs(usersCollectionRef).then((users) => {
       setUsers(users.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
+  };
+
+  useEffect(() => {
+    getAllTasksUser1();
+    getAllUsers();
+    console.log({ allUsers: users });
   }, []);
+
+  // useEffect(() => {
+  //   getDocs(usersCollectionRef).then((users) => {
+  //     setUsers(users.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //   });
+  // }, []);
 
   useEffect(() => {
     countOverdueTasks();
@@ -106,6 +116,11 @@ function App() {
       if (taskDueDate < todayDate) {
         tempOverdueNum++;
       }
+    }
+    if (tempOverdueNum > 0) {
+      setOverdueStyle("alert alert-danger");
+    } else {
+      setOverdueStyle("alert alert-success");
     }
     setOverdueTasksNum(tempOverdueNum);
   };
@@ -145,8 +160,9 @@ function App() {
 
   return (
     <div className="App">
-      <h3>you have {overdueTasksNum} overdue tasks</h3>
-      <h1>My tasks:</h1>
+      <h1>Hello, User!</h1>
+      <h3 className={overdueStyle}>you have {overdueTasksNum} overdue tasks</h3>
+      <h4>My tasks:</h4>
       <main>
         {/* <button onClick={sortByDueDate}>sort by due date</button> */}
         <label>Sort By:</label>
