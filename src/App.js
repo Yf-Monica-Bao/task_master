@@ -76,7 +76,7 @@ function App() {
   const getAllTasksUser1 = () => {
     getDocs(query(user1TasksCollectionRef, orderBy("due_date"))).then(
       (tasks) => {
-        setTasks(tasks.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setTasks(tasks.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       }
     );
   };
@@ -157,7 +157,7 @@ function App() {
         </Table>
         <AddTaskForm addTaskCallBack={addTask}></AddTaskForm>
         <div>
-          <UpdateTaskForm updateTaskCallBack={updateTask}></UpdateTaskForm>
+        <UpdateTaskForm updateTaskCallBack={updateTask}></UpdateTaskForm>
         </div>
       </main>
       {/* {users.map((user) => {

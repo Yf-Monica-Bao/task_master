@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 
 const UpdateTaskForm = (props) => {
   const [newDescription, setDescription] = useState("");
-  const [newDueDate, setDueDate] = useState(new Date());
+  const [newDueDate, setDueDate] = useState();
   const [newname, setName] = useState("");
   const [newStatus, setStatus] = useState("");
   const [newTimeToComplete, setTimeToComplete] = useState("");
@@ -54,41 +54,56 @@ const UpdateTaskForm = (props) => {
     <dialog id="updateForm">
       <form method="dialog">
         <input id="taskId" type="hidden" />
-        <label>Task Name</label>
-        <input
-          id="updateName"
-          type="string"
-          onChange={onNameChange}
-          placeholder="name"
-        />
-        <label>Due_date</label>
-        <input
-          id="updateDate"
-          type="date"
-          onChange={onDueDateChange}
-          placeholder="due_date"
-        />
-        <label>Task description</label>
-        <input
-          id="updateDes"
-          type="string"
-          onChange={onDescriptionChange}
-          placeholder="description"
-        />
-        <label>Status</label>
-        <input
-          id="updateStatus"
-          name="string"
-          onChange={onStatusChange}
-          placeholder="status"
-        />
-        <label>Estimate Time to Complete</label>
-        <input
-          id="updateTime"
-          type="string"
-          onChange={onTimeToCompleteChange}
-          placeholder="Estimate Time to Complete"
-        />
+        <p>
+          <label>Task Name</label>
+          <input
+            id="updateName"
+            type="string"
+            onChange={onNameChange}
+            placeholder="name"
+          />
+        </p>
+        <p>
+          <label>Due_date</label>
+          <input
+            id="updateDate"
+            type="date"
+            onChange={onDueDateChange}
+            placeholder="due_date"
+          />
+        </p>
+        <p>
+          <label>Task description</label>
+          <input
+            id="updateDes"
+            type="string"
+            onChange={onDescriptionChange}
+            placeholder="description"
+          />
+        </p>
+        <p>
+          <label>Progress Status</label>
+          <Form.Select
+            id="updateStatus"
+            aria-label="Progress Status"
+            onChange={onStatusChange}
+            value={newStatus}
+          >
+            <option value="not started yet">not started yet</option>
+            <option value="completed">completed</option>
+            <option value="in progress">in progress</option>
+            <option value="blocked">blocked</option>
+          </Form.Select>
+        </p>
+        <p>
+          <label>Estimate Time to Complete</label>
+          <input
+            id="updateTime"
+            type="string"
+            onChange={onTimeToCompleteChange}
+            placeholder="Estimate Time to Complete"
+          />
+        </p>
         <button value="cancel">Cancel</button>
         <button onClick={onFormSubmit}>Update Task</button>
       </form>
