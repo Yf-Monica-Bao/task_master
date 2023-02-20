@@ -105,7 +105,7 @@ function App() {
       console.log(task.due_date.toDate().toISOString().slice(0, 10));
       const taskDueDate = task.due_date.toDate().toISOString().slice(0, 10);
       const todayDate = new Date().toISOString().slice(0, 10);
-      if (taskDueDate < todayDate) {
+      if (taskDueDate < todayDate && task.status !== "completed") {
         tempOverdueNum++;
       }
     }
