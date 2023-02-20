@@ -160,8 +160,10 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Hello, User!</h1>
-      <h3 className={overdueStyle}>you have {overdueTasksNum} overdue tasks</h3>
+      {users[0] ? <h1>Hello, {users[0].name}!</h1> : <h1>Hello!</h1>}
+      <h3 className={overdueStyle}>
+        you have {overdueTasksNum} overdue task(s)
+      </h3>
       <h4>My tasks:</h4>
       <main>
         {/* <button onClick={sortByDueDate}>sort by due date</button> */}
