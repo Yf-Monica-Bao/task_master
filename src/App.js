@@ -1,4 +1,3 @@
-import "./App.css";
 import { React, useState, useEffect } from "react";
 import { db } from "./firebase-config";
 import { query, orderBy } from "firebase/firestore";
@@ -13,14 +12,23 @@ import {
 import AddTaskForm from "./addTaskForm";
 import UpdateTaskForm from "./updateTask";
 import TasksTable from "./components/tasksTable";
-import { Table } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
+import {
+  Box,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  TableContainer,
+  Select,
+  Flex,
+  Text,
+  Badge,
+} from "@chakra-ui/react";
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [users, setUsers] = useState([]);
   const [overdueTasksNum, setOverdueTasksNum] = useState(0);
-  const [overdueStyle, setOverdueStyle] = useState("alert alert-success");
 
   const [sortBy, setSortBy] = useState("due date");
 
@@ -101,11 +109,6 @@ function App() {
         tempOverdueNum++;
       }
     }
-    if (tempOverdueNum > 0) {
-      setOverdueStyle("alert alert-danger");
-    } else {
-      setOverdueStyle("alert alert-success");
-    }
     setOverdueTasksNum(tempOverdueNum);
   };
 
@@ -142,44 +145,64 @@ function App() {
   };
 
   return (
-    <div className="App">
-      {users[0] ? <h1>Hello, {users[0].name}!</h1> : <h1>Hello!</h1>}
-      <h3 className={overdueStyle}>
-        you have {overdueTasksNum} overdue task(s)
-      </h3>
-      <h4>My tasks:</h4>
-      <main>
-        <label>Sort By:</label>
-        <Form.Select
-          aria-label="Sort By"
-          onChange={onSortByChange}
-          value={sortBy}
-        >
-          <option value="due date" selected>
-            due date
-          </option>
-          <option value="name">name</option>
-          <option value="status">status</option>
-        </Form.Select>
+    <Box m="20" boxShadow="xl" rounded="md" p="10">
+      <Flex align="center" mb={4}>
+        <Text fontSize="md" fontWeight="medium" mr={2}>
+          {users[0] ? <h1>Hello, {users[0].name}!</h1> : <h1>Hello!</h1>}
+        </Text>
 
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Due Date</th>
-              <th>Time To Complete</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <TasksTable allTasks={tasks} deleteCallBack={deleteTask} />
-        </Table>
+        {overdueTasksNum === 0 ? (
+          <Text>You're all caught up!</Text>
+        ) : (
+          <Badge colorScheme="red">
+            You have {overdueTasksNum} overdue task(s)!
+          </Badge>
+        )}
+      </Flex>
+
+      <Text
+        fontSize="xl"
+        fontWeight="bold"
+        m={8}
+        borderBottom="solid 6px #1da1f2"
+      >
+        My Tasks
+      </Text>
+
+      <main>
+        <Flex w="60" align="center">
+          <Text whiteSpace="nowrap" mr={4}>
+            Sort By:
+          </Text>
+          <Select aria-label="Sort By" onChange={onSortByChange} value={sortBy}>
+            <option value="due date" selected>
+              due date
+            </option>
+            <option value="name">name</option>
+            <option value="status">status</option>
+          </Select>
+        </Flex>
+
+        <TableContainer>
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Description</Th>
+                <Th>Due Date</Th>
+                <Th>Time To Complete</Th>
+                <Th>Status</Th>
+              </Tr>
+            </Thead>
+            <TasksTable allTasks={tasks} deleteCallBack={deleteTask} />
+          </Table>
+        </TableContainer>
         <AddTaskForm addTaskCallBack={addTask}></AddTaskForm>
         <div>
           <UpdateTaskForm updateTaskCallBack={updateTask}></UpdateTaskForm>
         </div>
       </main>
-    </div>
+    </Box>
   );
 }
 

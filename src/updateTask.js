@@ -1,10 +1,15 @@
+import {
+  Box,
+  Button,
+  Flex,
+  Input,
+  Select,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-//import {db, updateDoc, doc} from '../firebase/firebaseConfig';
 
 //call get task by id api to get the task info for props.
-
 const UpdateTaskForm = (props) => {
   const [newDescription, setDescription] = useState("");
   const [newDueDate, setDueDate] = useState();
@@ -56,97 +61,92 @@ const UpdateTaskForm = (props) => {
   };
 
   return (
-    <dialog id="updateForm">
-      <form method="dialog">
-        <input id="taskId" type="hidden" />
-        <p>
-          <label>Task Name</label>
-          <input
-            id="updateName"
-            type="string"
-            onChange={onNameChange}
-            placeholder="name"
-          />
-        </p>
-        <p>
-          <label>Due_date</label>
-          <input
-            id="updateDate"
-            type="date"
-            onChange={onDueDateChange}
-            placeholder="due_date"
-          />
-        </p>
-        <p>
-          <label>Task description</label>
-          <input
-            id="updateDes"
-            type="string"
-            onChange={onDescriptionChange}
-            placeholder="description"
-          />
-        </p>
-        <p>
-          <label>Progress Status</label>
-          <Form.Select
-            id="updateStatus"
-            aria-label="Progress Status"
-            onChange={onStatusChange}
-            value={newStatus}
-          >
-            <option value="not started yet">not started yet</option>
-            <option value="completed">completed</option>
-            <option value="in progress">in progress</option>
-            <option value="blocked">blocked</option>
-          </Form.Select>
-        </p>
-        <p>
-          <label>Estimate Time to Complete</label>
-          <input
-            id="updateTime"
-            type="string"
-            onChange={onTimeToCompleteChange}
-            placeholder="Estimate Time to Complete"
-          />
-        </p>
-        <Button
-          value="cancel"
-          variant="outline-secondary"
-          onClick={onCloseForm}
-        >
-          Cancel
-        </Button>
-        <Button onClick={onFormSubmit} variant="outline-danger">
-          Update Task
-        </Button>
-      </form>
+    <dialog id="updateForm" style={{ padding: 0, borderRadius: 10 }}>
+      <Box rounded="lg" m="4" p="4">
+        <form method="dialog">
+          <input id="taskId" type="hidden" />
+          <Stack>
+            <Flex align="center">
+              <Text whiteSpace="nowrap" w="60">
+                Task Name
+              </Text>
+              <Input
+                id="updateName"
+                onChange={onNameChange}
+                placeholder="name"
+              />
+            </Flex>
+
+            <Flex align="center">
+              <Text whiteSpace="nowrap" w="60">
+                Due date
+              </Text>
+              <Input
+                id="updateDate"
+                type="date"
+                onChange={onDueDateChange}
+                placeholder="due_date"
+              />
+            </Flex>
+
+            <Flex align="center">
+              <Text whiteSpace="nowrap" w="60">
+                Task description
+              </Text>
+              <Input
+                id="updateDes"
+                onChange={onDescriptionChange}
+                placeholder="description"
+              />
+            </Flex>
+
+            <Flex align="center">
+              <Text whiteSpace="nowrap" w="60">
+                Progress Status
+              </Text>
+              <Select
+                w="100%"
+                id="updateStatus"
+                aria-label="Progress Status"
+                onChange={onStatusChange}
+                value={newStatus}
+              >
+                <option value="not started yet">not started yet</option>
+                <option value="completed">completed</option>
+                <option value="in progress">in progress</option>
+                <option value="blocked">blocked</option>
+              </Select>
+            </Flex>
+
+            <Flex align="center">
+              <Text whiteSpace="nowrap" w="60">
+                Time to Complete
+              </Text>
+              <Input
+                id="updateTime"
+                onChange={onTimeToCompleteChange}
+                placeholder="Estimate Time to Complete"
+              />
+            </Flex>
+
+            <Flex gap={4} p={4}>
+              <Button
+                value="cancel"
+                variant="outline"
+                onClick={onCloseForm}
+                colorScheme="blackAlpha"
+              >
+                Cancel
+              </Button>
+              <Button onClick={onFormSubmit} colorScheme="twitter">
+                Update Task
+              </Button>
+            </Flex>
+          </Stack>
+        </form>
+      </Box>
     </dialog>
   );
 };
 
 export default UpdateTaskForm;
-
-// const updateTask = async (id, new_description, new_due_date, new_name, new_status, new_time_to_complete) => {
-//     const taskDoc = doc(db, "task", id)
-//     const newFields = {}
-//     if (new_description != null){
-//         newFields.put("description",new_description);
-//     }
-//     if (new_due_date != null){
-//         newFields.put("due_date",new_due_date);
-//     }
-//     if (new_name != null){
-//         newFields.put("name",new_name);
-//     }
-//     if (new_status != null){
-//         newFields.put("status",new_status);
-//     }
-//     if (new_time_to_complete != null){
-//         newFields.put("time_to_complete",new_time_to_complete);
-//     }
-
-//     await updateDoc(taskDoc, newFields);
-
-// }
-
-// export default updateTask;

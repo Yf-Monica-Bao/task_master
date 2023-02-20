@@ -1,8 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import Button from "react-bootstrap/Button";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import Table from "react-bootstrap/Table";
+import { Tr, Td, Button } from "@chakra-ui/react";
 
 const oneTask = ({
   id,
@@ -17,6 +14,7 @@ const oneTask = ({
     deleteTaskCallBack(id);
   };
   const displayUpdateCallBack = () => {
+    document.getElementById("updateForm").showModal();
     document.getElementById("updateName").value = name;
     document.getElementById("updateDes").value = description;
     document.getElementById("updateDate").value = new Date(dueDate)
@@ -25,27 +23,36 @@ const oneTask = ({
     document.getElementById("updateTime").value = timeToComplete;
     document.getElementById("updateStatus").value = status;
     document.getElementById("taskId").value = id;
-    document.getElementById("updateForm").showModal();
   };
 
   return (
-    <tr>
-      <td>{name}</td>
-      <td>{description}</td>
-      <td>{dueDate}</td>
-      <td>{timeToComplete}</td>
-      <td>{status}</td>
-      <td>
-        <Button variant="outline-dark" onClick={displayUpdateCallBack}>
+    <Tr>
+      <Td>{name}</Td>
+      <Td>{description}</Td>
+      <Td>{dueDate}</Td>
+      <Td>{timeToComplete}</Td>
+      <Td>{status}</Td>
+      <Td>
+        <Button
+          colorScheme="blackAlpha"
+          variant="outline"
+          size="sm"
+          onClick={displayUpdateCallBack}
+        >
           Update
         </Button>
-      </td>
-      <td>
-        <Button variant="outline-danger" onClick={deleteCallBack}>
+      </Td>
+      <Td>
+        <Button
+          colorScheme="red"
+          variant="outline"
+          size="sm"
+          onClick={deleteCallBack}
+        >
           Delete
         </Button>
-      </td>
-    </tr>
+      </Td>
+    </Tr>
   );
 };
 
