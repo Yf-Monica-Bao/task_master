@@ -10,7 +10,6 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { async } from "@firebase/util";
 import AddTaskForm from "./addTaskForm";
 import UpdateTaskForm from "./updateTask";
 import TasksTable from "./components/tasksTable";
@@ -22,14 +21,6 @@ function App() {
   const [users, setUsers] = useState([]);
   const [overdueTasksNum, setOverdueTasksNum] = useState(0);
   const [overdueStyle, setOverdueStyle] = useState("alert alert-success");
-
-  // const [currentTask, setCurrentTask] = useState({
-  //     description: "",
-  //     due_date: "",
-  //     name: "",
-  //     status: "",
-  //     time_to_complete: "",
-  // });
 
   const [sortBy, setSortBy] = useState("due date");
 
@@ -96,12 +87,6 @@ function App() {
     console.log({ allUsers: users });
   }, []);
 
-  // useEffect(() => {
-  //   getDocs(usersCollectionRef).then((users) => {
-  //     setUsers(users.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  //   });
-  // }, []);
-
   useEffect(() => {
     countOverdueTasks();
   }, [tasks]);
@@ -110,7 +95,6 @@ function App() {
     var tempOverdueNum = 0;
     for (const task of tasks) {
       console.log(task.due_date.toDate().toISOString().slice(0, 10));
-      // const taskDueDate = task.due_date.toDate().toDateString();
       const taskDueDate = task.due_date.toDate().toISOString().slice(0, 10);
       const todayDate = new Date().toISOString().slice(0, 10);
       if (taskDueDate < todayDate) {
@@ -143,7 +127,6 @@ function App() {
     getAllTasksUser1();
   };
 
-  //const id = "9zCGaSnElsdiFzTa72zo";
   const updateTask = async (taskId, newTask) => {
     console.log(taskId);
     const taskDoc = doc(db, `users/6cVRBwcwJzOUOBIcVDOQ/tasks/${taskId}`);
@@ -166,7 +149,6 @@ function App() {
       </h3>
       <h4>My tasks:</h4>
       <main>
-        {/* <button onClick={sortByDueDate}>sort by due date</button> */}
         <label>Sort By:</label>
         <Form.Select
           aria-label="Sort By"
@@ -177,7 +159,6 @@ function App() {
             due date
           </option>
           <option value="name">name</option>
-          {/* <option value="time to complete">time to complete</option> */}
           <option value="status">status</option>
         </Form.Select>
 
@@ -198,9 +179,6 @@ function App() {
           <UpdateTaskForm updateTaskCallBack={updateTask}></UpdateTaskForm>
         </div>
       </main>
-      {/* {users.map((user) => {
-        return <section key={user.id}>{JSON.stringify(user)}</section>;
-      })} */}
     </div>
   );
 }
