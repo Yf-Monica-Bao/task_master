@@ -1,123 +1,130 @@
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
-//import {db, updateDoc, doc} from '../firebase/firebaseConfig'; 
+import Button from "react-bootstrap/Button";
+//import {db, updateDoc, doc} from '../firebase/firebaseConfig';
 
 //call get task by id api to get the task info for props.
 
-
 const UpdateTaskForm = (props) => {
-    const [newDescription, setDescription] = useState("");
-    const [newDueDate, setDueDate] = useState(); 
-    const [newname, setName] = useState(""); 
-    const [newStatus, setStatus] = useState(""); 
-    const [newTimeToComplete, setTimeToComplete] = useState("")
+  const [newDescription, setDescription] = useState("");
+  const [newDueDate, setDueDate] = useState();
+  const [newname, setName] = useState("");
+  const [newStatus, setStatus] = useState("");
+  const [newTimeToComplete, setTimeToComplete] = useState("");
 
-    const onDescriptionChange = (event) => {
-        setDescription(event.target.value)
+  const onDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const onDueDateChange = (event) => {
+    setDueDate(event.target.value);
+  };
+
+  const onNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const onStatusChange = (event) => {
+    setStatus(event.target.value);
+  };
+
+  const onTimeToCompleteChange = (event) => {
+    setTimeToComplete(event.target.value);
+  };
+
+  const onFormSubmit = (event) => {
+    const updateName = document.getElementById("updateName").value;
+    const updateDes = document.getElementById("updateDes").value;
+    const updateDate = document.getElementById("updateDate").value;
+    const updateTime = document.getElementById("updateTime").value;
+    const updateStatus = document.getElementById("updateStatus").value;
+    const taskId = document.getElementById("taskId").value;
+    const task = {
+      description: updateDes,
+      due_date: updateDate,
+      name: updateName,
+      status: updateStatus,
+      time_to_complete: updateTime,
     };
+    event.preventDefault();
+    props.updateTaskCallBack(taskId, task);
+    document.getElementById("updateForm").close();
+  };
 
-    const onDueDateChange = (event) => {
-        setDueDate(event.target.value)
-    }
+  const onCloseForm = () => {
+    document.getElementById("updateForm").close();
+  };
 
-    const onNameChange = (event) => {
-        setName(event.target.value)
-    }
+  return (
+    <dialog id="updateForm">
+      <form method="dialog">
+        <input id="taskId" type="hidden" />
+        <p>
+          <label>Task Name</label>
+          <input
+            id="updateName"
+            type="string"
+            onChange={onNameChange}
+            placeholder="name"
+          />
+        </p>
+        <p>
+          <label>Due_date</label>
+          <input
+            id="updateDate"
+            type="date"
+            onChange={onDueDateChange}
+            placeholder="due_date"
+          />
+        </p>
+        <p>
+          <label>Task description</label>
+          <input
+            id="updateDes"
+            type="string"
+            onChange={onDescriptionChange}
+            placeholder="description"
+          />
+        </p>
+        <p>
+          <label>Progress Status</label>
+          <Form.Select
+            id="updateStatus"
+            aria-label="Progress Status"
+            onChange={onStatusChange}
+            value={newStatus}
+          >
+            <option value="not started yet">not started yet</option>
+            <option value="completed">completed</option>
+            <option value="in progress">in progress</option>
+            <option value="blocked">blocked</option>
+          </Form.Select>
+        </p>
+        <p>
+          <label>Estimate Time to Complete</label>
+          <input
+            id="updateTime"
+            type="string"
+            onChange={onTimeToCompleteChange}
+            placeholder="Estimate Time to Complete"
+          />
+        </p>
+        <Button
+          value="cancel"
+          variant="outline-secondary"
+          onClick={onCloseForm}
+        >
+          Cancel
+        </Button>
+        <Button onClick={onFormSubmit} variant="outline-danger">
+          Update Task
+        </Button>
+      </form>
+    </dialog>
+  );
+};
 
-    const onStatusChange = (event) => {
-        setStatus(event.target.value)
-    }
-
-    const onTimeToCompleteChange = (event) => {
-        setTimeToComplete(event.target.value)
-    }
-
-    const onFormSubmit = (event) => {
-        const updateName = document.getElementById('updateName').value;
-        const updateDes = document.getElementById('updateDes').value;
-        const updateDate = document.getElementById('updateDate').value;
-        const updateTime = document.getElementById('updateTime').value;
-        const updateStatus = document.getElementById('updateStatus').value;
-        const taskId = document.getElementById('taskId').value;
-        const task = {
-            description: updateDes,
-            due_date: updateDate, 
-            name: updateName,
-            status: updateStatus,
-            time_to_complete: updateTime
-        };
-        event.preventDefault(); 
-        props.updateTaskCallBack(taskId, task);
-        document.getElementById('updateForm').close();
-
-    }
-
-    return (
-            <dialog id="updateForm">
-            <form method="dialog">
-                <input id="taskId" type="hidden"/>
-                <p>
-                    <label>Task Name</label>
-                    <input id ="updateName"
-                        type = "string"
-                        onChange = {onNameChange}
-                        placeholder = "name" 
-                    />
-                </p>
-                <p>
-                    <label>Due_date</label>
-                    <input id = "updateDate"
-                        type = "date"
-                        onChange = {onDueDateChange}
-                        placeholder = "due_date" 
-                    />
-                </p>
-                <p>
-                    <label>Task description</label>
-                    <input id = "updateDes"
-                        type = "string"
-                        onChange = {onDescriptionChange}
-                        placeholder = "description" 
-                    />
-                </p>
-                <p>
-                <label>Progress Status</label>
-                    <Form.Select
-                        id = "updateStatus"
-                        aria-label="Progress Status"
-                        onChange={onStatusChange}
-                        value={newStatus}
-                    >
-                        <option value="not started yet">not started yet</option>
-                        <option value="completed">completed</option>
-                        <option value="in progress">in progress</option>
-                        <option value="blocked">blocked</option>
-                    </Form.Select>
-                </p>
-                <p>
-                    <label>Estimate Time to Complete</label>
-                    <input id = "updateTime"
-                        type = "string"
-                        onChange = {onTimeToCompleteChange}
-                        placeholder = "Estimate Time to Complete" 
-                    />
-                </p>
-                <button value="cancel">Cancel</button>
-                <button onClick={onFormSubmit}>Update Task</button>
-            </form>
-            </dialog>
-
-); 
-}; 
-
-export default UpdateTaskForm; 
-
-
-
-
-
-
-
+export default UpdateTaskForm;
 
 // const updateTask = async (id, new_description, new_due_date, new_name, new_status, new_time_to_complete) => {
 //     const taskDoc = doc(db, "task", id)

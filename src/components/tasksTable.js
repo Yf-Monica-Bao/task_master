@@ -16,7 +16,7 @@ const tasksTable = ({ allTasks, deleteCallBack }) => {
     //   </ol>
     // );
     //const dueDate = task.due_date.toDate();
-    
+
     const options = {
       weekday: "long",
       year: "numeric",
@@ -32,7 +32,7 @@ const tasksTable = ({ allTasks, deleteCallBack }) => {
         id={task.id}
         name={task.name}
         description={task.description}
-        dueDate={task.due_date.toDate().toLocaleString('en-GB', options)}
+        dueDate={task.due_date.toDate().toLocaleString("en-GB", options)}
         //dueDate={dueDate.getUTCFullYear() + "-" + dueDate.getUTCMonth() + "-" + dueDate.getUTCDay()}
         timeToComplete={task.time_to_complete}
         status={task.status}
