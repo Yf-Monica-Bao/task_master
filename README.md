@@ -1,5 +1,6 @@
 # Project Description: 
 Task master is a project ceated by three engineering students from the Ada Academy. The purpose of this project is to help individuals to organize and keep track of their tasks. 
+This program includes features such as, adding new task, deleting task, update task, sorting tasks, etc. 
 
 # Tech Stack:
 Firebase, React, HTML, CSS
