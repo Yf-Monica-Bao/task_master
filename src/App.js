@@ -14,6 +14,7 @@ import {
 import { async } from "@firebase/util";
 import AddTaskForm from "./addTaskForm";
 import TasksTable from "./components/tasksTable";
+import UpdateTaskForm from "./updateTask";
 import { Table } from "react-bootstrap";
 
 import Form from "react-bootstrap/Form";
