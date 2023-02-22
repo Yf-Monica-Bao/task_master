@@ -12,6 +12,7 @@ import {
 import AddTaskForm from "./addTaskForm";
 import UpdateTaskForm from "./updateTask";
 import TasksTable from "./components/tasksTable";
+import UpdateTaskForm from "./updateTask";
 import {
   Box,
   Table,
