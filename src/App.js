@@ -1,35 +1,35 @@
-import "./App.css";
 import { React, useState, useEffect } from "react";
 import { db } from "./firebase-config";
-
+import { query, orderBy } from "firebase/firestore";
 import {
   collection,
   getDocs,
   addDoc,
   deleteDoc,
   doc,
-  updateDoc
+  updateDoc,
 } from "firebase/firestore";
-
-import { async } from "@firebase/util";
 import AddTaskForm from "./addTaskForm";
+import UpdateTaskForm from "./updateTask";
 import TasksTable from "./components/tasksTable";
 import UpdateTaskForm from "./updateTask";
-import { Table } from "react-bootstrap";
-
-import Form from "react-bootstrap/Form";
-
+import {
+  Box,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  TableContainer,
+  Select,
+  Flex,
+  Text,
+  Badge,
+} from "@chakra-ui/react";
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [users, setUsers] = useState([]);
-  // const [currentTask, setCurrentTask] = useState({
-  //     description: "",
-  //     due_date: "",
-  //     name: "",
-  //     status: "",
-  //     time_to_complete: "",
-  // });
+  const [overdueTasksNum, setOverdueTasksNum] = useState(0);
 
   const [sortBy, setSortBy] = useState("due date");
 
@@ -77,20 +77,41 @@ function App() {
   const usersCollectionRef = collection(db, "users");
 
   const getAllTasksUser1 = () => {
-    getDocs(user1TasksCollectionRef).then((tasks) => {
-      setTasks(tasks.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    getDocs(query(user1TasksCollectionRef, orderBy("due_date"))).then(
+      (tasks) => {
+        setTasks(tasks.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      }
+    );
+  };
+
+  const getAllUsers = () => {
+    getDocs(usersCollectionRef).then((users) => {
+      setUsers(users.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   };
 
   useEffect(() => {
     getAllTasksUser1();
+    getAllUsers();
+    console.log({ allUsers: users });
   }, []);
 
   useEffect(() => {
-    getDocs(usersCollectionRef).then((users) => {
-      setUsers(users.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    });
-  }, []);
+    countOverdueTasks();
+  }, [tasks]);
+
+  const countOverdueTasks = () => {
+    var tempOverdueNum = 0;
+    for (const task of tasks) {
+      console.log(task.due_date.toDate().toISOString().slice(0, 10));
+      const taskDueDate = task.due_date.toDate().toISOString().slice(0, 10);
+      const todayDate = new Date().toISOString().slice(0, 10);
+      if (taskDueDate < todayDate && task.status !== "completed") {
+        tempOverdueNum++;
+      }
+    }
+    setOverdueTasksNum(tempOverdueNum);
+  };
 
   const addTask = async (newTask) => {
     await addDoc(user1TasksCollectionRef, {
@@ -110,60 +131,79 @@ function App() {
     getAllTasksUser1();
   };
 
-  //const id = "9zCGaSnElsdiFzTa72zo";
   const updateTask = async (taskId, newTask) => {
     console.log(taskId);
-    const taskDoc = doc(db, `users/6cVRBwcwJzOUOBIcVDOQ/tasks/${taskId}`)
+    const taskDoc = doc(db, `users/6cVRBwcwJzOUOBIcVDOQ/tasks/${taskId}`);
     const newFields = {
       description: newTask.description,
       due_date: new Date(newTask.due_date),
       name: newTask.name,
       status: newTask.status,
-      time_to_complete: newTask.time_to_complete,}
+      time_to_complete: newTask.time_to_complete,
+    };
     await updateDoc(taskDoc, newFields);
     getAllTasksUser1();
   };
 
   return (
-    <div className="App">
-      <h1>My tasks:</h1>
-      <main>
-        {/* <button onClick={sortByDueDate}>sort by due date</button> */}
-        <label>Sort By:</label>
-        <Form.Select
-          aria-label="Sort By"
-          onChange={onSortByChange}
-          value={sortBy}
-        >
-          <option value="due date" selected>
-            due date
-          </option>
-          <option value="name">name</option>
-          {/* <option value="time to complete">time to complete</option> */}
-          <option value="status">status</option>
-        </Form.Select>
+    <Box m="20" boxShadow="xl" rounded="md" p="10">
+      <Flex align="center" mb={4}>
+        <Text fontSize="md" fontWeight="medium" mr={2}>
+          {users[0] ? <h1>Hello, {users[0].name}!</h1> : <h1>Hello!</h1>}
+        </Text>
 
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Due Date</th>
-              <th>Time To Complete</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <TasksTable allTasks={tasks} deleteCallBack={deleteTask} />
-        </Table>
+        {overdueTasksNum === 0 ? (
+          <Text>You're all caught up!</Text>
+        ) : (
+          <Badge colorScheme="red">
+            You have {overdueTasksNum} overdue task(s)!
+          </Badge>
+        )}
+      </Flex>
+
+      <Text
+        fontSize="xl"
+        fontWeight="bold"
+        m={8}
+        borderBottom="solid 6px #1da1f2"
+      >
+        My Tasks
+      </Text>
+
+      <main>
+        <Flex w="60" align="center">
+          <Text whiteSpace="nowrap" mr={4}>
+            Sort By:
+          </Text>
+          <Select aria-label="Sort By" onChange={onSortByChange} value={sortBy}>
+            <option value="due date" selected>
+              due date
+            </option>
+            <option value="name">name</option>
+            <option value="status">status</option>
+          </Select>
+        </Flex>
+
+        <TableContainer>
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Description</Th>
+                <Th>Due Date</Th>
+                <Th>Time To Complete</Th>
+                <Th>Status</Th>
+              </Tr>
+            </Thead>
+            <TasksTable allTasks={tasks} deleteCallBack={deleteTask} />
+          </Table>
+        </TableContainer>
         <AddTaskForm addTaskCallBack={addTask}></AddTaskForm>
         <div>
-        <UpdateTaskForm updateTaskCallBack={updateTask}></UpdateTaskForm>
+          <UpdateTaskForm updateTaskCallBack={updateTask}></UpdateTaskForm>
         </div>
       </main>
-      {/* {users.map((user) => {
-        return <section key={user.id}>{JSON.stringify(user)}</section>;
-      })} */}
-    </div>
+    </Box>
   );
 }
 

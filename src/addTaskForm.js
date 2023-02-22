@@ -1,5 +1,15 @@
+import { AddIcon } from "@chakra-ui/icons";
+import {
+  Button,
+  Select,
+  IconButton,
+  Stack,
+  Text,
+  Input,
+  Flex,
+  Box,
+} from "@chakra-ui/react";
 import { useState } from "react";
-import Form from "react-bootstrap/Form";
 
 const AddTaskForm = (props) => {
   const [newDescription, setDescription] = useState("");
@@ -7,12 +17,12 @@ const AddTaskForm = (props) => {
   const [newname, setName] = useState("");
   const [newStatus, setStatus] = useState("not started yet");
   const [newTimeToComplete, setTimeToComplete] = useState("");
-  const [toggleForm, setToggleForm] = useState(false); 
+  const [toggleForm, setToggleForm] = useState(false);
 
   const onToggleForm = (event) => {
-    event.preventDefault(); 
-    setToggleForm(!toggleForm)
-  }
+    event.preventDefault();
+    setToggleForm(!toggleForm);
+  };
 
   const onDescriptionChange = (event) => {
     setDescription(event.target.value);
@@ -52,52 +62,80 @@ const AddTaskForm = (props) => {
 
   return (
     <form onSubmit={onFormSubmit}>
-      <button onClick={onToggleForm}>Add Task</button> 
+      <IconButton
+        onClick={onToggleForm}
+        colorScheme="twitter"
+        m="4"
+        size="lg"
+        borderRadius="50%"
+        boxShadow="xl"
+        icon={<AddIcon />}
+      />
       {toggleForm && (
-        <div>
-        <label>Task Name</label>
-      <input
-        type="string"
-        onChange={onNameChange}
-        placeholder="name"
-        value={newname}
-      />
-      <label>Due_date</label>
-      <input
-        type="date"
-        onChange={onDueDateChange}
-        placeholder="due_date"
-        value={newDueDate}
-      />
-      <label>Task description</label>
-      <input
-        type="string"
-        onChange={onDescriptionChange}
-        placeholder="description"
-        value={newDescription}
-      />
+        <Stack w={500}>
+          <Flex align="center">
+            <Text whiteSpace="nowrap" w="60">
+              Task Name
+            </Text>
+            <Input onChange={onNameChange} placeholder="name" value={newname} />
+          </Flex>
 
-      <label>Estimate Time to Complete</label>
-      <input
-        type="string"
-        onChange={onTimeToCompleteChange}
-        placeholder="Estimate Time to Complete"
-        value={newTimeToComplete}
-      />
-      <label>Progress Satus</label>
-      <Form.Select
-        aria-label="Progress Status"
-        onChange={onStatusChange}
-        value={newStatus}
-      >
-        <option value="not started yet">not started yet</option>
-        <option value="completed">completed</option>
-        <option value="in progress">in progress</option>
-        <option value="blocked">blocked</option>
-      </Form.Select>
+          <Flex align="center">
+            <Text whiteSpace="nowrap" w="60">
+              Due date
+            </Text>
+            <Input
+              type="date"
+              onChange={onDueDateChange}
+              placeholder="due_date"
+              value={newDueDate}
+            />
+          </Flex>
 
-      <button type="submit">Add</button> 
-      </div>
+          <Flex align="center">
+            <Text whiteSpace="nowrap" w="60">
+              Task description
+            </Text>
+            <Input
+              onChange={onDescriptionChange}
+              placeholder="description"
+              value={newDescription}
+            />
+          </Flex>
+
+          <Flex align="center">
+            <Text whiteSpace="nowrap" w="60">
+              Progress Status
+            </Text>
+            <Select
+              aria-label="Progress Status"
+              onChange={onStatusChange}
+              value={newStatus}
+            >
+              <option value="not started yet">not started yet</option>
+              <option value="completed">completed</option>
+              <option value="in progress">in progress</option>
+              <option value="blocked">blocked</option>
+            </Select>
+          </Flex>
+
+          <Flex align="center">
+            <Text whiteSpace="nowrap" w="60">
+              Time to Complete
+            </Text>
+            <Input
+              onChange={onTimeToCompleteChange}
+              placeholder="Estimate Time to Complete"
+              value={newTimeToComplete}
+            />
+          </Flex>
+
+          <Box>
+            <Button type="submit" colorScheme="twitter" w={24} m={4}>
+              Add
+            </Button>
+          </Box>
+        </Stack>
       )}
     </form>
   );
